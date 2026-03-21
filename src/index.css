@@ -1338,3 +1338,54 @@ body::after {
   font-size: 14px;
   color: var(--text-dim);
 }
+
+/* ─── User card delete ───────────────────────────────────── */
+.user-card-wrapper {
+  position: relative;
+  display: inline-flex;
+}
+
+.user-card-delete {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-dim);
+  font-size: 10px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s, border-color 0.15s, color 0.15s, width 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.user-card-wrapper:hover .user-card-delete {
+  opacity: 1;
+}
+
+.user-card-delete:hover {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+.user-card-delete--confirm {
+  opacity: 1 !important;
+  width: auto;
+  padding: 0 8px;
+  border-radius: var(--radius);
+  border-color: var(--danger);
+  color: var(--danger);
+  font-size: 11px;
+  font-family: var(--font-ui);
+}
+
+.user-card--confirming {
+  opacity: 0.5;
+  pointer-events: none;
+}

@@ -14,10 +14,11 @@ function getAvatarColor(name: string): string {
 }
 
 export function UserPicker() {
-  const { users, setActiveUser, addUser } = useApp()
+  const { users, setActiveUser, addUser, removeUser } = useApp()
   const t = useT()
   const [showAdd, setShowAdd] = useState(false)
   const [name, setName] = useState('')
+  const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null)
 
   const handleAdd = () => {
     if (!name.trim()) return
@@ -25,6 +26,16 @@ export function UserPicker() {
     setActiveUser(user.id)
     setName('')
     setShowAdd(false)
+  }
+
+  const handleDelete = (e: React.MouseEvent, id: string) => {
+    e.stopPropagation()
+    if (confirmDeleteId === id) {
+      removeUser(id)
+      setConfirmDeleteId(null)
+    } else {
+      setConfirmDeleteId(id)
+    }
   }
 
   return (
@@ -35,25 +46,34 @@ export function UserPicker() {
         <div className="user-picker-grid">
           {users.map((user) => {
             const color = getAvatarColor(user.name)
+            const confirming = confirmDeleteId === user.id
             return (
-              <button
-                key={user.id}
-                className="user-card"
-                onClick={() => setActiveUser(user.id)}
-              >
-                <div className="user-avatar" style={{ '--avatar-color': color } as React.CSSProperties}>
-                  {user.name.charAt(0).toUpperCase()}
-                </div>
-                <span className="user-name">{user.name}</span>
-                <span className="user-count">
-                  {user.accounts.length} {user.accounts.length === 1 ? t('inbox') : t('inboxes')}
-                </span>
-              </button>
+              <div key={user.id} className="user-card-wrapper">
+                <button
+                  className={`user-card${confirming ? ' user-card--confirming' : ''}`}
+                  onClick={() => !confirming && setActiveUser(user.id)}
+                >
+                  <div className="user-avatar" style={{ '--avatar-color': color } as React.CSSProperties}>
+                    {user.name.charAt(0).toUpperCase()}
+                  </div>
+                  <span className="user-name">{user.name}</span>
+                  <span className="user-count">
+                    {user.accounts.length} {user.accounts.length === 1 ? t('inbox') : t('inboxes')}
+                  </span>
+                </button>
+                <button
+                  className={`user-card-delete${confirming ? ' user-card-delete--confirm' : ''}`}
+                  onClick={(e) => handleDelete(e, user.id)}
+                  title={confirming ? t('Confirm delete') : t('Delete user')}
+                >
+                  {confirming ? t('Delete?') : '✕'}
+                </button>
+              </div>
             )
           })}
 
           {!showAdd && (
-            <button className="user-card user-card--add" onClick={() => setShowAdd(true)}>
+            <button className="user-card user-card--add" onClick={() => { setShowAdd(true); setConfirmDeleteId(null) }}>
               <div className="user-avatar user-avatar--add">+</div>
               <span className="user-name">{t('Add user')}</span>
             </button>
