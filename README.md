@@ -54,10 +54,10 @@ Run it on any machine that has Docker. Access it from your browser — on any de
 ┌──────────────────────────────────────────────────────────┐
 │                      Your Browser                        │
 │                                                          │
-│  ┌───────────────┐      ┌─────────────────────────────┐ │
-│  │  React SPA    │◄────►│  mail.tm REST API           │ │
-│  │  (UI/state)   │      │  api.mail.tm  (public)      │ │
-│  └──────┬────────┘      └─────────────────────────────┘ │
+│  ┌───────────────┐      ┌─────────────────────────────┐  │
+│  │  React SPA    │◄────►│  mail.tm REST API           │  │
+│  │  (UI/state)   │      │  api.mail.tm  (public)      │  │
+│  └──────┬────────┘      └─────────────────────────────┘  │
 │         │ /api/users (GET / PUT)                         │
 └─────────┼────────────────────────────────────────────────┘
           │
@@ -65,16 +65,16 @@ Run it on any machine that has Docker. Access it from your browser — on any de
 │  Docker Container (:3000)                                │
 │         │                                                │
 │  ┌──────▼──────────────────────────────────────────────┐ │
-│  │  Express server                                      │ │
-│  │  · serves /dist  (React app)                         │ │
-│  │  · GET /api/users  →  reads  data/users.json         │ │
-│  │  · PUT /api/users  →  writes data/users.json         │ │
-│  └──────────────────────┬───────────────────────────────┘ │
+│  │  Express server                                     │ │
+│  │  · serves /dist  (React app)                        │ │
+│  │  · GET /api/users  →  reads  data/users.json        │ │
+│  │  · PUT /api/users  →  writes data/users.json        │ │
+│  └──────────────────────┬──────────────────────────────┘ │
 │                         │                                │
-│  ┌──────────────────────▼───────────────────────────────┐ │
-│  │  Docker Volume: tempbox_data                          │ │
-│  │  /app/data/users.json                                 │ │
-│  └───────────────────────────────────────────────────────┘ │
+│  ┌──────────────────────▼──────────────────────────────┐ │
+│  │  Docker Volume: tempbox_data                        │ │
+│  │  /app/data/users.json                               │ │
+│  └─────────────────────────────────────────────────────┘ │
 └──────────────────────────────────────────────────────────┘
 ```
 
@@ -97,23 +97,29 @@ Run it on any machine that has Docker. Access it from your browser — on any de
 ### Docker Compose (recommended)
 
 ```bash
-git clone https://github.com/xthephreakx/tempbox-web.git
-cd tempbox-web
+curl -o docker-compose.yml https://raw.githubusercontent.com/xthephreakx/tempbox-web/main/docker-compose.yml
 docker compose up -d
 ```
 
-Open `http://localhost:3000` in your browser.
+Open `http://localhost:3000` in your browser. No build step needed — pulls the pre-built image from ghcr.io.
 
 ### Docker run
 
 ```bash
-docker build -t tempbox .
 docker run -d \
   --name tempbox \
   -p 3000:3000 \
   -v tempbox_data:/app/data \
   --restart unless-stopped \
-  tempbox
+  ghcr.io/xthephreakx/tempbox-web:latest
+```
+
+### Build from source
+
+```bash
+git clone https://github.com/xthephreakx/tempbox-web.git
+cd tempbox-web
+docker compose up -d --build
 ```
 
 ### Custom port

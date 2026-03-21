@@ -1,6 +1,6 @@
 services:
   tempbox:
-    build: .
+    image: ghcr.io/xthephreakx/tempbox-web:latest
     ports:
       - "${PORT:-3000}:3000"
     volumes:
