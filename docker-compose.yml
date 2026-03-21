@@ -1,0 +1,13 @@
+services:
+  tempbox:
+    build: .
+    ports:
+      - "${PORT:-3000}:3000"
+    volumes:
+      - tempbox_data:/app/data
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+
+volumes:
+  tempbox_data:

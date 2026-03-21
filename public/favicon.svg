@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <defs>
+    <filter id="glow-teal" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="1.8" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="glow-pink" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- dark background -->
+  <rect width="32" height="32" rx="7" fill="#06080F"/>
+
+  <!-- envelope body -->
+  <rect x="3" y="12" width="22" height="14" rx="2" fill="#0C1422" stroke="#00FEA2" stroke-width="1.6" filter="url(#glow-teal)"/>
+
+  <!-- envelope V fold -->
+  <path d="M3 12 L14 21 L25 12" fill="none" stroke="#00FEA2" stroke-width="1.6" stroke-linejoin="round" filter="url(#glow-teal)"/>
+
+  <!-- hot pink notification badge (top right) -->
+  <circle cx="25" cy="9" r="5.5" fill="#06080F"/>
+  <circle cx="25" cy="9" r="4.5" fill="#FF007C" filter="url(#glow-pink)"/>
+</svg>
