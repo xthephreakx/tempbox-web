@@ -12,11 +12,26 @@
 
 ---
 
+## Background
+
+[TempBox](https://github.com/devwaseem/TempBox) was a great little macOS app for managing disposable email addresses via the [mail.tm](https://mail.tm) API. It was clean, fast, and did exactly what it needed to do. Unfortunately it is no longer maintained and only works on macOS.
+
+I wanted something that:
+- Works on **any device** — phone, tablet, desktop, any OS
+- Can be **self-hosted** without depending on a cloud service
+- Runs in a **single Docker container** — no complex setup, no database
+- Supports **multiple users** on the same instance — each with their own inboxes
+- Is **open source** so others can use and build on it
+
+So I built TempBox Web. Same idea, same API — just a web app you can run yourself.
+
+---
+
 ## What is this?
 
 TempBox Web lets you create and manage disposable email addresses using the free [mail.tm](https://mail.tm) API — no account, no sign-up required.
 
-Run it on any machine that has Docker. Access it from your browser.
+Run it on any machine that has Docker. Access it from your browser — on any device, on your local network, or over a VPN.
 
 ---
 
