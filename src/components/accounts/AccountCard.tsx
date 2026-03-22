@@ -6,9 +6,10 @@ import type { StoredAccount } from '../../types'
 interface Props {
   account: StoredAccount
   index: number
+  onSelect?: () => void
 }
 
-export function AccountCard({ account, index }: Props) {
+export function AccountCard({ account, index, onSelect }: Props) {
   const { activeAccountId, setActiveAccount, removeAccount } = useApp()
   const isActive = activeAccountId === account.id
   const [copied, setCopied] = useState(false)
@@ -32,10 +33,10 @@ export function AccountCard({ account, index }: Props) {
     <div
       className={`account-card ${isActive ? 'account-card--active' : ''}`}
       style={{ animationDelay: `${index * 60}ms` }}
-      onClick={() => setActiveAccount(account.id)}
+      onClick={() => { setActiveAccount(account.id); onSelect?.() }}
       role="button"
       tabIndex={0}
-      onKeyDown={(e) => e.key === 'Enter' && setActiveAccount(account.id)}
+      onKeyDown={(e) => { if (e.key === 'Enter') { setActiveAccount(account.id); onSelect?.() } }}
     >
       <div className="account-card-address">{account.address}</div>
       <div className="account-card-actions">

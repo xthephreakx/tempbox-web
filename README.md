@@ -43,6 +43,8 @@ Run it on any machine that has Docker. Access it from your browser — on any de
 - **HTML email rendering** — sandboxed iframe, no scripts executed
 - **Persistent** — accounts survive restarts via a local JSON file (Docker volume)
 - **8 color themes** — Cyberpunk (default), The Matrix (with l33t sp34k UI), Aliens (1986), and more
+- **Mobile-friendly** — responsive layout with bottom tab bar on small screens
+- **Legible addresses** — JetBrains Mono for clear `l / I / 1 / O / 0` distinction
 - **No external dependencies** — all mail API calls go directly from the browser to `api.mail.tm`
 - **Single Docker container** — no database, no proxy required
 

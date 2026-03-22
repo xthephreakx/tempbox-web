@@ -6,11 +6,16 @@ import { AccountInfo } from '../accounts/AccountInfo'
 import { CreateAccountForm } from '../accounts/CreateAccountForm'
 import { ThemePicker } from './ThemePicker'
 
-export function Sidebar() {
-  const { accounts, activeAccountId, activeUser, clearActiveUser } = useApp()
+export function Sidebar({ onNavigateToInbox }: { onNavigateToInbox?: () => void }) {
+  const { accounts, activeAccountId, activeUser, clearActiveUser, setActiveAccount } = useApp()
   const [showCreate, setShowCreate] = useState(false)
   const activeAccount = accounts.find((a) => a.id === activeAccountId) ?? null
   const t = useT()
+
+  const handleSelectAccount = (id: string) => {
+    setActiveAccount(id)
+    onNavigateToInbox?.()
+  }
 
   return (
     <aside className="sidebar">
@@ -44,7 +49,7 @@ export function Sidebar() {
           </div>
         )}
         {accounts.map((account, i) => (
-          <AccountCard key={account.id} account={account} index={i} />
+          <AccountCard key={account.id} account={account} index={i} onSelect={() => handleSelectAccount(account.id)} />
         ))}
       </div>
 

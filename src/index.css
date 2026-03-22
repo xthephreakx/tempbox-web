@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500;600&family=Syne:wght@400;500;600;700&family=Orbitron:wght@700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Syne:wght@400;500;600;700&family=Orbitron:wght@700;900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,7 +6,8 @@
 
 /* ─── Design tokens ──────────────────────────────────────── */
 :root {
-  --font-mono:  'Geist Mono', 'Fira Code', monospace;
+  --font-mono:    'Geist Mono', 'Fira Code', monospace;
+  --font-address: 'JetBrains Mono', monospace; /* clear l/I/1/O/0 distinction */
   --font-ui:    'Syne', system-ui, sans-serif;
   --font-logo:  var(--font-mono);
   --radius:     4px;
@@ -354,15 +355,15 @@ body::after {
 }
 
 .account-card-address {
-  font-family: var(--font-mono);
-  font-size: 15px;
+  font-family: var(--font-address);
+  font-size: 13px;
   color: var(--text-pri);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal;
+  word-break: break-all;
   min-width: 0;
   flex: 1;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
+  line-height: 1.4;
 }
 
 .account-card--active .account-card-address { color: var(--accent); }
@@ -835,7 +836,7 @@ body::after {
 }
 
 .account-info-address {
-  font-family: var(--font-mono);
+  font-family: var(--font-address);
   font-size: 14px;
   color: var(--accent);
   word-break: break-all;
@@ -1388,4 +1389,90 @@ body::after {
 .user-card--confirming {
   opacity: 0.5;
   pointer-events: none;
+}
+
+/* ─── Mobile responsive ──────────────────────────────────── */
+@media (max-width: 640px) {
+  /* hide sidebar or main panel based on active tab */
+  .shell[data-mobile-view="inbox"] .sidebar   { display: none; }
+  .shell[data-mobile-view="sidebar"] .main-panel { display: none; }
+
+  /* full width panels */
+  .sidebar {
+    width: 100%;
+    min-width: 100%;
+    height: calc(100dvh - 56px);
+    border-right: none;
+  }
+
+  .main-panel {
+    width: 100%;
+    height: calc(100dvh - 56px);
+  }
+
+  /* inbox list + message view stack vertically */
+  .main-panel {
+    flex-direction: column;
+  }
+
+  .inbox-list {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    height: 50%;
+    border-right: none;
+    border-bottom: 1px solid var(--border-dim);
+  }
+
+  .message-view {
+    width: 100%;
+    height: 50%;
+  }
+
+  /* bottom tab bar */
+  .mobile-tab-bar {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 56px;
+    background: var(--bg-panel);
+    border-top: 1px solid var(--border-dim);
+    z-index: 100;
+  }
+
+  .mobile-tab {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    background: none;
+    border: none;
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: color 0.15s;
+  }
+
+  .mobile-tab--active {
+    color: var(--accent);
+  }
+
+  .mobile-tab-icon { font-size: 18px; }
+  .mobile-tab-label { font-size: 10px; font-family: var(--font-ui); letter-spacing: 0.05em; }
+
+  /* user picker grid: 2 columns on mobile */
+  .user-picker-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .user-picker-title { font-size: 22px; }
+}
+
+/* hide tab bar on desktop */
+@media (min-width: 641px) {
+  .mobile-tab-bar { display: none; }
 }
