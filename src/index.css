@@ -358,8 +358,9 @@ body::after {
   font-family: var(--font-address);
   font-size: 13px;
   color: var(--text-pri);
-  white-space: normal;
-  word-break: break-all;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   min-width: 0;
   flex: 1;
   letter-spacing: 0;

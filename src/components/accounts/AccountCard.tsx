@@ -38,7 +38,7 @@ export function AccountCard({ account, index, onSelect }: Props) {
       tabIndex={0}
       onKeyDown={(e) => { if (e.key === 'Enter') { setActiveAccount(account.id); onSelect?.() } }}
     >
-      <div className="account-card-address">{account.address}</div>
+      <div className="account-card-address" title={account.address}>{account.address}</div>
       <div className="account-card-actions">
         <button
           className={`icon-btn ${copied ? 'icon-btn--success' : ''}`}
