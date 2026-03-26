@@ -35,5 +35,18 @@ export function formatDate(dateStr: string): string {
 }
 
 export async function copyToClipboard(text: string): Promise<void> {
-  await navigator.clipboard.writeText(text)
+  if (navigator.clipboard) {
+    try {
+      await navigator.clipboard.writeText(text)
+      return
+    } catch {}
+  }
+  const el = document.createElement('textarea')
+  el.value = text
+  el.style.cssText = 'position:fixed;opacity:0;pointer-events:none'
+  document.body.appendChild(el)
+  el.focus()
+  el.select()
+  document.execCommand('copy')
+  document.body.removeChild(el)
 }
